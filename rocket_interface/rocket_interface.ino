@@ -1,4 +1,5 @@
 int switchState = 0;
+bool blinkState = false;
 
 void setup() {
   pinMode(3, OUTPUT);
@@ -16,14 +17,16 @@ void restBehaviour() {
 
 void activeBehaviour() {
   digitalWrite(3, LOW);
-  digitalWrite(4, LOW);
-  digitalWrite(5, HIGH);
-
-  delay(250);
-
-  digitalWrite(4, HIGH);
-  digitalWrite(5, LOW);
-
+  
+  if (blinkState == false) {
+    digitalWrite(4, LOW);
+    digitalWrite(5, HIGH);
+  }
+  else {
+    digitalWrite(4, HIGH);
+    digitalWrite(5, LOW);
+  }
+  blinkState = !blinkState;
   delay(250);
 }
 
@@ -31,6 +34,7 @@ void loop() {
   switchState = digitalRead(2);
 
   if (switchState == LOW) {
+    blinkState = false;
     restBehaviour();
   }
   else {
